@@ -27,7 +27,7 @@ var chartGroup = svg.append("g")
 var chosenXAxis = "age";
 
 // function used for updating x-scale var upon click on axis label
-function xScale(heatlh, chosenXAxis) {
+function xScale(health, chosenXAxis) {
   // create scales
   var xLinearScale = d3.scaleLinear()
     .domain([d3.min(health, d => d[chosenXAxis]) * 0.8,
@@ -52,7 +52,7 @@ function renderAxes(newXScale, xAxis) {
 
 // function used for updating circles group with a transition to
 // new circles
-function renderCircles(circlesGroup, newXScale, chosenXaxis) {
+function renderCircles(circlesGroup, newXScale, chosenXAxis) {
 
   circlesGroup.transition()
     .duration(1000)
@@ -135,7 +135,7 @@ d3.csv("data.csv").then(function(health) {
   var labelsGroup = chartGroup.append("g")
     .attr("transform", `translate(${width / 2}, ${height + 20})`);
 
-  var hairLengthLabel = labelsGroup.append("text")
+  var ageLabel = labelsGroup.append("text")
     .attr("x", 0)
     .attr("y", 20)
     .attr("value", "age") // value to grab for event listener
@@ -147,6 +147,15 @@ d3.csv("data.csv").then(function(health) {
     .attr("y", 40)
     .attr("value", "age") // value to grab for event listener
     .classed("inactive", true)
+    .text("");
+
+  //append Y axis
+  chartGroup.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left)
+    .attr("x", 0 - (height/2))
+    .attr("dy", "1em")
+    .classed("active", true)
     .text("Smokes (%)");
 
   // updateToolTip function above csv import
